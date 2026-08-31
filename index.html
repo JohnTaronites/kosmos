@@ -1,3 +1,444 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kosmiczna Przygoda 2.7 - Poprawki Mobilne!</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&display=swap');
+
+    body, html {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        font-family: 'Nunito', sans-serif;
+        background-color: #0b0c10;
+        color: #fff;
+        overflow: hidden; 
+    }
+
+    /* Gwieździste tło */
+    .stars {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: -1;
+        background: radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                    radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
+                    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0)),
+                    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0,0,0,0)),
+                    radial-gradient(2px 2px at 160px 120px, #ddd, rgba(0,0,0,0));
+        background-repeat: repeat;
+        background-size: 200px 200px;
+        animation: starsMove 40s linear infinite;
+    }
+
+    @keyframes starsMove {
+        from { transform: translateY(0); }
+        to { transform: translateY(-200px); }
+    }
+
+    /* Kontener przewijania */
+    .scroll-container {
+        height: 100vh;
+        width: 100vw;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+        outline: none;
+        position: relative;
+    }
+
+    /* NASZA RAKIETA */
+    #player-rocket {
+        position: fixed;
+        top: 72%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg) scale(2.5);
+        font-size: 3.5rem;
+        z-index: 1000;
+        pointer-events: none; 
+        filter: drop-shadow(0 15px 15px rgba(255, 87, 34, 0.8));
+    }
+
+    /* Pojedyncza strona/slajd */
+    .slide {
+        height: 100vh;
+        width: 100vw;
+        scroll-snap-align: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .slide:nth-child(even) { flex-direction: row; }
+    .slide:nth-child(odd) { flex-direction: row-reverse; }
+
+    /* ZIEMIA HORYZONT (NASA) Z IDEALNYM OBROTEM */
+    .horizon-earth {
+        position: absolute;
+        bottom: 0; 
+        left: -10vw; 
+        width: 120vw; 
+        height: 35vh;
+        border-top-left-radius: 50% 100%;
+        border-top-right-radius: 50% 100%;
+        box-shadow: 0 -15px 40px rgba(0,0,0,0.9), inset 0 20px 50px rgba(255,255,255,0.3);
+        z-index: 1;
+        overflow: hidden; 
+    }
+
+    /* Obracamy jedynie tło graficzne (zdjęcie), kontener zostaje płaski */
+    .horizon-earth::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 150vw; 
+        height: 150vw;
+        background-image: url('https://images-assets.nasa.gov/image/PIA00342/PIA00342~orig.jpg');
+        background-size: cover;
+        background-position: center;
+        transform: translate(-50%, -50%) rotate(-90deg);
+        z-index: -1;
+    }
+
+    /* Slajdy start/meta z tekstami w rogu */
+    .start-slide, .end-slide {
+        display: block !important; 
+    }
+
+    .start-slide .info, .end-slide .info {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        max-width: 450px;
+        text-align: left;
+        margin: 0;
+        z-index: 10;
+        transform: translateY(0) !important;
+        opacity: 1 !important;
+    }
+
+    /* Sekcja z obrazkiem/planetą w kosmosie */
+    .visual {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transform: scale(0.5) translateY(50px);
+        transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        z-index: 5;
+    }
+
+    /* Sekcja z tekstem w kosmosie */
+    .info {
+        flex: 1;
+        max-width: 550px;
+        padding: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 30px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        border: 4px solid rgba(255,255,255,0.2);
+        opacity: 0;
+        transform: translateX(100px);
+        transition: all 1s ease 0.3s;
+        z-index: 5;
+    }
+
+    .slide:nth-child(odd) .info { transform: translateX(-100px); }
+    .slide.is-visible .visual { opacity: 1; transform: scale(1) translateY(0); }
+    .slide.is-visible .info { opacity: 1; transform: translateX(0); }
+
+    /* Teksty */
+    h2 { font-size: 4.5rem; margin: 0 0 15px 0; color: #ffeb3b; text-shadow: 3px 3px 6px rgba(0,0,0,0.8); }
+    p { font-size: 1.5rem; line-height: 1.4; margin: 0 0 20px 0; }
+    ul { list-style: none; padding: 0; margin: 0; font-size: 1.25rem; }
+    li { margin-bottom: 12px; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 15px; }
+    .emoji { font-size: 3rem; vertical-align: middle; }
+    .real-value { color: #80deea; font-size: 1.1rem; display: block; margin-top: 5px; font-weight: normal; }
+    .pulse-btn { background: #ff5722; color: #fff; padding: 15px 30px; border-radius: 50px; font-size: 1.5rem; font-weight: bold; border: none; animation: pulseBtn 2s infinite; display: inline-block; margin-top: 10px; box-shadow: 0 5px 15px rgba(255,87,34,0.5); cursor: pointer;}
+    
+    @keyframes pulseBtn { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+    /* Obiekty kosmiczne */
+    .planet { border-radius: 50%; box-shadow: inset -20px -20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(255,255,255,0.1); animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-30px); } }
+
+    .sun { width: 40vmin; height: 40vmin; background: radial-gradient(circle, #ffea00, #ff5e00); box-shadow: 0 0 100px #ffea00; }
+    .mercury { width: 15vmin; height: 15vmin; background: radial-gradient(circle, #a8a8a8, #5c5c5c); }
+    .venus { width: 20vmin; height: 20vmin; background: radial-gradient(circle, #ffcc80, #d87c2b); }
+    .earth { width: 25vmin; height: 25vmin; background: radial-gradient(circle at 35% 35%, #4fc3f7 0%, #2196f3 30%, #4caf50 45%, #1b5e20 55%, #0d47a1 100%); }
+    .moon { width: 12vmin; height: 12vmin; background: radial-gradient(circle, #f0f0f0, #999); box-shadow: inset -10px -10px 20px rgba(0,0,0,0.5); }
+    .mars { width: 18vmin; height: 18vmin; background: radial-gradient(circle, #ff5722, #8e2300); }
+    .jupiter { width: 35vmin; height: 35vmin; background: repeating-linear-gradient(0deg, #d3a479, #d3a479 20px, #e8c7a6 20px, #e8c7a6 40px); }
+    .saturn-container { position: relative; animation: float 6s ease-in-out infinite; }
+    .saturn { width: 28vmin; height: 28vmin; background: radial-gradient(circle, #eed182, #b89c4d); }
+    .rings { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(20deg); width: 45vmin; height: 15vmin; border: 15px solid rgba(222, 203, 164, 0.7); border-radius: 50%; box-shadow: 0 0 20px rgba(0,0,0,0.5); }
+    .uranus { width: 22vmin; height: 22vmin; background: radial-gradient(circle, #80deea, #0097a7); }
+    .neptune { width: 22vmin; height: 22vmin; background: radial-gradient(circle, #2962ff, #000080); }
+    .pluto { width: 10vmin; height: 10vmin; background: radial-gradient(circle, #e0d5c1, #8f8272); position: relative; }
+    .pluto::after { content: ''; position: absolute; top: 50%; left: 30%; width: 30%; height: 30%; background: rgba(255,255,255,0.4); border-radius: 50% 50% 50% 10%; transform: rotate(-45deg); filter: blur(2px); }
+    .milkyway { width: 50vmin; height: 30vmin; background: radial-gradient(ellipse, rgba(255,255,255,0.9), rgba(156,39,176,0.5), transparent 70%); animation: spin 20s linear infinite; border-radius: 50%; }
+    .andromeda { width: 45vmin; height: 25vmin; background: radial-gradient(ellipse, rgba(255,255,255,0.9), rgba(33, 150, 243, 0.6), transparent 70%); border-radius: 50%; transform: rotate(15deg); animation: pulse 4s ease-in-out infinite; }
+    .blackhole { width: 18vmin; height: 18vmin; background: #000; border-radius: 50%; box-shadow: 0 0 40px 20px #ff5722, 0 0 80px 40px #ffc107; animation: spin 5s linear infinite, float 6s ease-in-out infinite; border: 2px solid rgba(255,255,255,0.1); }
+    
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    @keyframes pulse { 0%, 100% { transform: rotate(15deg) scale(1); } 50% { transform: rotate(15deg) scale(1.05); opacity: 0.8; } }
+
+    /* WERSJA MOBILNA - POPRAWIONY UKŁAD */
+    @media (max-width: 768px) {
+        .start-slide .info, .end-slide .info { left: 5%; top: 5%; right: 5%; max-width: none; }
+        .horizon-earth { height: 25vh; }
+        .horizon-earth::before { width: 200vh; height: 200vh; }
+        
+        .slide:nth-child(even), .slide:nth-child(odd) { 
+            flex-direction: column; 
+            text-align: center; 
+            justify-content: flex-start;
+            padding: 15px 10px;
+        }
+        
+        .visual { 
+            flex: none;
+            height: 35vh;
+            transform: scale(0.65) translateY(0); 
+            padding-top: 10px;
+        }
+        
+        .info { 
+            flex: none;
+            background: transparent; 
+            border: none; 
+            box-shadow: none; 
+            backdrop-filter: none;
+            padding: 0 10px; 
+            margin-top: 0; 
+        }
+        
+        .slide:nth-child(even) .info, .slide:nth-child(odd) .info { 
+            transform: translateY(10px); 
+        }
+        
+        h2 { font-size: 2.8rem; margin-bottom: 5px; }
+        p { font-size: 1.1rem; margin-bottom: 15px; }
+        li { font-size: 1rem; padding: 10px; margin-bottom: 8px; background: rgba(0,0,0,0.5); }
+        .real-value { font-size: 0.95rem; }
+    }
+</style>
+</head>
+<body>
+
+<div class="stars"></div>
+
+<div id="player-rocket">🚀</div>
+
+<div class="scroll-container" tabindex="0">
+
+    <div class="slide start-slide">
+        <div class="horizon-earth"></div>
+        <div class="info">
+            <h2>Start!</h2>
+            <p>Twoja rakieta czeka na Ziemi (prosto od NASA!).</p>
+            <button class="pulse-btn" onclick="document.querySelector('.scroll-container').scrollBy({ top: window.innerHeight, behavior: 'smooth' });">Rozpocznij lot w dół! ⬇️</button>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet sun"></div></div>
+        <div class="info">
+            <h2>Sun ☀️</h2>
+            <p>Słońce to wielka, gorąca gwiazda, która daje nam światło do zabawy i grzeje w brzuszki.</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> OGROOOOMNE! <span class="real-value">(Średnica: ok. 1 392 700 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Parzy w paluszki! <span class="real-value">(Na powierzchni: ok. 5 500 °C)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet mercury"></div></div>
+        <div class="info">
+            <h2>Mercury 🪨</h2>
+            <p>Najszybsza planeta! Kręci się najbliżej Słońca, dlatego biega bardzo szybko.</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Malutki jak orzeszek. <span class="real-value">(Średnica: ok. 4 879 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> W dzień gorąco, w nocy mróz! <span class="real-value">(Od -173 °C do +427 °C)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet venus"></div></div>
+        <div class="info">
+            <h2>Venus ✨</h2>
+            <p>Najjaśniejsza planeta na niebie. Wygląda jak śliczna, błyszcząca gwiazdka.</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Prawie jak Ziemia. <span class="real-value">(Średnica: ok. 12 104 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Najbardziej gorąca ze wszystkich! <span class="real-value">(Ok. +462 °C - istny piecyk!)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet earth"></div></div>
+        <div class="info">
+            <h2>Earth 🌍</h2>
+            <p>Nasz piękny, niebieski dom. Mieszkamy tu my, pieski, kotki i drzewa!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Idealna dla nas! <span class="real-value">(Średnica: ok. 12 742 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> W sam raz do zabawy! <span class="real-value">(Średnio ok. +15 °C)</span></li>
+                <li>💧 <strong>Ciekawostka:</strong> Z kosmosu wygląda na niebieską, bo ma mnóstwo wspaniałych oceanów.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet moon"></div></div>
+        <div class="info">
+            <h2>Moon 🌙</h2>
+            <p>Nasz przyjaciel Księżyc, który świeci nam w nocy, żebyśmy nie bali się spać.</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Dużo mniejszy niż Ziemia. <span class="real-value">(Średnica: ok. 3 474 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> W dzień upał, w nocy lód! <span class="real-value">(Od -173 °C do +127 °C)</span></li>
+                <li>🚀 <strong>Ciekawostka:</strong> Byli tam prawdziwi astronauci!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet mars"></div></div>
+        <div class="info">
+            <h2>Mars 🔴</h2>
+            <p>Nazywamy go czerwoną planetą. Wygląda jakby był posypany rdzawym piaskiem!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Mniejszy od Ziemi o połowę. <span class="real-value">(Średnica: ok. 6 779 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Bardzo, bardzo zimno. <span class="real-value">(Średnio ok. -60 °C)</span></li>
+                <li>🤖 <strong>Ciekawostka:</strong> Jeżdżą po nim prawdziwe roboty (łaziki)!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet jupiter"></div></div>
+        <div class="info">
+            <h2>Jupiter 🟠</h2>
+            <p>Wielki olbrzym zrobiony z gazu. Ma na brzuszku wielką, czerwoną plamę z chmur!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Największy w naszym układzie! <span class="real-value">(Średnica: ok. 139 820 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Zimne, mroźne chmury. <span class="real-value">(Ok. -108 °C)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual">
+            <div class="saturn-container">
+                <div class="planet saturn"></div>
+                <div class="rings"></div>
+            </div>
+        </div>
+        <div class="info">
+            <h2>Saturn 🪐</h2>
+            <p>Elegancka planeta, która nosi dookoła pasa przepiękne pierścienie z lodu i kamyków.</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Drugi największy gazowy olbrzym! <span class="real-value">(Średnica: ok. 116 460 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Tam też jest straszny mróz! <span class="real-value">(Ok. -139 °C)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet uranus"></div></div>
+        <div class="info">
+            <h2>Uranus 🧊</h2>
+            <p>Zimna, błękitna kuleczka. Jest taki leniwy, że toczy się po niebie na boku!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Wielka, lodowa kula. <span class="real-value">(Średnica: ok. 50 724 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Brrr... Lodowata! <span class="real-value">(Nawet do -224 °C)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet neptune"></div></div>
+        <div class="info">
+            <h2>Neptune 🌊</h2>
+            <p>Niebieski brat Urana. Wieje na nim najsilniejszy wiatr w całym kosmosie!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Podobny do Urana. <span class="real-value">(Średnica: ok. 49 244 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Niesamowicie zimno! <span class="real-value">(Ok. -200 °C)</span></li>
+                <li>💨 <strong>Ciekawostka:</strong> Wiatry wieją tam szybciej niż lecą najszybsze samoloty!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="planet pluto"></div></div>
+        <div class="info">
+            <h2>Pluto 🤍</h2>
+            <p>Planeta karłowata, która mieszka na samych krańcach naszego układu. Ma na brzuszku lodowe serce!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Malutki, mniejszy niż Księżyc. <span class="real-value">(Średnica: ok. 2 376 km)</span></li>
+                <li>🌡️ <strong>Temperatura:</strong> Prawdziwa kraina lodu! <span class="real-value">(Średnio ok. -225 °C)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="milkyway"></div></div>
+        <div class="info">
+            <h2>Milky Way 🌌</h2>
+            <p>To nasz wielki gwiezdny dom (galaktyka). Wygląda jak rozlane mleko na nocnym niebie!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Niewyobrażalnie wielka! <span class="real-value">(Średnica: ok. 100 000 lat świetlnych)</span></li>
+                <li>✨ <strong>Ciekawostka:</strong> Słońce i Ziemia znajdują się w jej środku!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="andromeda"></div></div>
+        <div class="info">
+            <h2>Andromeda Galaxy 💫</h2>
+            <p>Najbliższa sąsiadka Drogi Mlecznej. Wygląda jak gigantyczny, wirujący, świetlisty wiatraczek!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Jeszcze większa od naszego domku! <span class="real-value">(Średnica: ok. 220 000 lat świetlnych)</span></li>
+                <li>🚀 <strong>Ciekawostka:</strong> Odległość to aż 2,5 miliona lat świetlnych!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <div class="visual"><div class="blackhole"></div></div>
+        <div class="info">
+            <h2>Black Hole (TON 618) 🕳️</h2>
+            <p>Największy kosmiczny odkurzacz! Przyciąga do siebie absolutnie wszystko. Bez obaw – jest baaardzo daleko od nas!</p>
+            <ul>
+                <li>📏 <strong>Wielkość:</strong> Prawdziwy potwór! <span class="real-value">(Masa: 66 miliardów razy cięższa od Słońca)</span></li>
+                <li>✨ <strong>Ciekawostka:</strong> Świeci dookoła niej wielki wir gorącego gazu.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide end-slide">
+        <div class="horizon-earth"></div>
+        <div class="info">
+            <h2>Koniec Misji!</h2>
+            <p>Wylądowaliśmy! Ziemia, nasz ukochany dom. <br>Zwiń w górę, by polecieć jeszcze raz!</p>
+        </div>
+    </div>
+
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const scrollContainer = document.querySelector('.scroll-container');
@@ -20,12 +461,12 @@
         const MAX_SLIDES = 15; // Mamy 16 slajdów (0 do 15)
 
         let currentProgress = 0;
-        let currentVisualAngle = -45; // Rakieta domyślnie patrzy w górę
+        let currentVisualAngle = -45;
 
         // 1. Zwraca IDEALNĄ docelową pozycję rakiety dla danego slajdu
         function getSlideTarget(i) {
             let isMobile = window.innerWidth < 768;
-            let baseY = isMobile ? 35 : 50; // Na telefonie planeta jest ciut wyżej (35% ekranu)
+            let baseY = isMobile ? 35 : 50; 
             
             // Slajd 0 (Start) i 15 (Meta) - lądowanie na Ziemi
             if (i <= 0) return { x: 50, y: 72, scale: 2.5 };
@@ -33,14 +474,13 @@
 
             // Slajdy z planetami (1 do 14) - rakieta leci na przemian lewo/prawo
             let isPlanetLeft = (i + 1) % 2 === 0; 
-            let xPos = isPlanetLeft ? 75 : 25; // Odwrotnie do planety
+            let xPos = isPlanetLeft ? 75 : 25; 
             
-            // Lekka korekta odstępów dla telefonów
             if (isMobile) {
                 xPos = isPlanetLeft ? 85 : 15;
             }
 
-            return { x: xPos, y: baseY, scale: 1.5 }; // Bezpieczna, stała skala
+            return { x: xPos, y: baseY, scale: 1.5 };
         }
 
         // 2. Zwraca płynną pozycję pomiędzy slajdami (interpolacja)
@@ -50,7 +490,6 @@
             let endIndex = Math.ceil(p);
             let t = p - startIndex;
 
-            // Złagodzenie ruchu (smoothstep) - rakieta miękko zwalnia przy planetach
             let easeT = t * t * (3 - 2 * t);
 
             let start = getSlideTarget(startIndex);
@@ -69,31 +508,26 @@
             let viewportHeight = window.innerHeight;
             let targetProgress = scrollTop / viewportHeight;
 
-            // Rakieta miękko goni scrolla (prędkość 0.08)
             currentProgress += (targetProgress - currentProgress) * 0.08;
 
             let pos = getPathPos(currentProgress);
             
-            // Obliczanie "przyszłej" pozycji, żeby wiedzieć, w którą stronę odwrócić dziób
             let nextPos = getPathPos(currentProgress + 0.05);
             let dx = (nextPos.x - pos.x) * (window.innerWidth / 100);
             let dy = (nextPos.y - pos.y) * (window.innerHeight / 100);
             let speed = Math.sqrt(dx * dx + dy * dy);
 
-            let targetAngle = -45; // Domyślnie rakieta ustawia się pionowo do góry na postojach
+            let targetAngle = -45; 
             
-            // Jeśli rakieta wyraźnie się przemieszcza, obracamy ją w kierunku lotu
             if (speed > 1) {
                 let mathAngle = Math.atan2(dy, dx) * 180 / Math.PI;
-                targetAngle = mathAngle + 45; // Dodajemy 45, bo to emoji 🚀 domyślnie "leży" pod kątem
+                targetAngle = mathAngle + 45; 
             }
 
-            // Zapobieganie wariowaniu przy obrocie (wybiera najkrótszą drogę przez kąty)
             let angleDiff = targetAngle - currentVisualAngle;
             angleDiff = ((angleDiff + 180) % 360 + 360) % 360 - 180;
             currentVisualAngle += angleDiff * 0.1;
 
-            // Aplikowanie stylów
             rocket.style.left = `${pos.x}%`;
             rocket.style.top = `${pos.y}%`;
             rocket.style.transform = `translate(-50%, -50%) rotate(${currentVisualAngle}deg) scale(${pos.scale})`;
@@ -104,3 +538,6 @@
         requestAnimationFrame(animationLoop);
     });
 </script>
+
+</body>
+</html>
