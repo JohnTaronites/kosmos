@@ -1,323 +1,106 @@
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kosmiczna Gra - Naprawiona Rakieta</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #0f172a;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-        }
-
-        #game-container {
-            position: relative;
-            width: 800px;
-            height: 600px;
-            background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
-            border: 4px solid #334155;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
-        }
-
-        /* Gwiazdy w tle */
-        .star {
-            position: absolute;
-            background-color: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: twinkle 2s infinite ease-in-out alternate;
-        }
-
-        @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* Planeta */
-        #planet-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 200px;
-            height: 200px;
-            cursor: pointer;
-            transition: transform 0.1s ease-out;
-            z-index: 10;
-        }
-
-        #planet {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #4ade80, #166534);
-            box-shadow: 
-                inset -20px -20px 40px rgba(0,0,0,0.5),
-                0 0 30px rgba(74, 222, 128, 0.4);
-            transition: filter 0.5s ease;
-        }
-
-        /* Pasek zdrowia planety */
-        #health-bar-bg {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        #health-bar-fill {
-            width: 100%;
-            height: 100%;
-            background-color: #ef4444;
-            transition: width 0.2s ease-out;
-        }
-
-        /* Rakieta */
-        #rocket {
-            position: absolute;
-            font-size: 50px;
-            /* Ustawiamy punkt transformacji na środek emoji */
-            transform-origin: center center;
-            z-index: 20;
-            pointer-events: none; /* Żeby nie blokowała klikania w planetę */
-            /* Płynne przejścia dla obrotu */
-            transition: transform 0.3s ease; 
-        }
-
-        /* UI - Licznik */
-        #ui-layer {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            z-index: 30;
-            pointer-events: none;
-        }
-
-        /* Ekran końcowy */
-        #end-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            z-index: 15; /* Pod rakietą (z-index 20), żeby było widać jak ląduje na ekranie */
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease;
-        }
-
-        #end-screen.visible {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        #end-screen h1 {
-            font-size: 60px;
-            margin-bottom: 20px;
-            color: #fbbf24;
-            text-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
-        }
-
-        #end-screen button {
-            padding: 15px 30px;
-            font-size: 20px;
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        #end-screen button:hover {
-            background-color: #2563eb;
-        }
-    </style>
-</head>
-<body>
-
-<div id="game-container">
-    <div id="ui-layer">Pozostałe planety: <span id="planets-count">3</span></div>
-    
-    <div id="planet-container">
-        <div id="planet"></div>
-        <div id="health-bar-bg"><div id="health-bar-fill"></div></div>
-    </div>
-
-    <!-- Rakieta (emoji) -->
-    <div id="rocket">🚀</div>
-
-    <div id="end-screen">
-        <h1>MISJA ZAKOŃCZONA!</h1>
-        <p style="font-size: 24px; margin-bottom: 40px;">Wszystkie planety zneutralizowane.</p>
-        <button onclick="location.reload()">Zagraj ponownie</button>
-    </div>
-</div>
-
 <script>
-    // --- GENEROWANIE GWIAZD ---
-    const container = document.getElementById('game-container');
-    for (let i = 0; i < 50; i++) {
-        let star = document.createElement('div');
-        star.className = 'star';
-        star.style.width = Math.random() * 3 + 1 + 'px';
-        star.style.height = star.style.width;
-        star.style.left = Math.random() * 800 + 'px';
-        star.style.top = Math.random() * 600 + 'px';
-        star.style.animationDelay = Math.random() * 2 + 's';
-        container.appendChild(star);
-    }
+    document.addEventListener("DOMContentLoaded", function() {
+        const scrollContainer = document.querySelector('.scroll-container');
+        scrollContainer.focus();
 
-    // --- LOGIKA GRY ---
-    const planetContainer = document.getElementById('planet-container');
-    const planetEl = document.getElementById('planet');
-    const healthBar = document.getElementById('health-bar-fill');
-    const planetsCountEl = document.getElementById('planets-count');
-    const endScreen = document.getElementById('end-screen');
-    const rocket = document.getElementById('rocket');
-
-    let planetsLeft = 3;
-    let currentPlanetHP = 10;
-    const maxHP = 10;
-
-    // Obsługa kliknięcia w planetę
-    planetContainer.addEventListener('mousedown', () => {
-        if (planetsLeft <= 0) return;
-
-        // Efekt uderzenia (skurczenie)
-        planetContainer.style.transform = 'translate(-50%, -50%) scale(0.9)';
+        const slides = document.querySelectorAll('.slide');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                } else {
+                    entry.target.classList.remove('is-visible');
+                }
+            });
+        }, { threshold: 0.4 });
         
-        currentPlanetHP--;
-        healthBar.style.width = (currentPlanetHP / maxHP) * 100 + '%';
+        slides.forEach(slide => observer.observe(slide));
 
-        if (currentPlanetHP <= 0) {
-            planetsLeft--;
-            planetsCountEl.innerText = planetsLeft;
+        const rocket = document.getElementById('player-rocket');
+        const MAX_SLIDES = 15; // Mamy 16 slajdów (0 do 15)
 
-            if (planetsLeft > 0) {
-                // Kolejna planeta
-                currentPlanetHP = maxHP;
-                healthBar.style.width = '100%';
-                // Losowy kolor dla nowej planety (zmiana hue)
-                planetEl.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
-            } else {
-                // Koniec gry!
-                planetContainer.style.display = 'none';
-                endScreen.classList.add('visible');
-                // Zmieniamy tryb rakiety na lądowanie
-                rocketPhase = 'landing';
+        let currentProgress = 0;
+        let currentVisualAngle = -45; // Rakieta domyślnie patrzy w górę
+
+        // 1. Zwraca IDEALNĄ docelową pozycję rakiety dla danego slajdu
+        function getSlideTarget(i) {
+            let isMobile = window.innerWidth < 768;
+            let baseY = isMobile ? 35 : 50; // Na telefonie planeta jest ciut wyżej (35% ekranu)
+            
+            // Slajd 0 (Start) i 15 (Meta) - lądowanie na Ziemi
+            if (i <= 0) return { x: 50, y: 72, scale: 2.5 };
+            if (i >= MAX_SLIDES) return { x: 50, y: 72, scale: 2.5 };
+
+            // Slajdy z planetami (1 do 14) - rakieta leci na przemian lewo/prawo
+            let isPlanetLeft = (i + 1) % 2 === 0; 
+            let xPos = isPlanetLeft ? 75 : 25; // Odwrotnie do planety
+            
+            // Lekka korekta odstępów dla telefonów
+            if (isMobile) {
+                xPos = isPlanetLeft ? 85 : 15;
             }
-        }
-    });
 
-    planetContainer.addEventListener('mouseup', () => {
-        planetContainer.style.transform = 'translate(-50%, -50%) scale(1)';
-    });
-
-    planetContainer.addEventListener('mouseleave', () => {
-        planetContainer.style.transform = 'translate(-50%, -50%) scale(1)';
-    });
-
-
-    // --- LOGIKA RAKIETY ---
-    let rocketX = 400; // Środek ekranu X
-    let rocketY = 650; // Zaczyna poza ekranem na dole
-    let rocketVx = 4;  // Prędkość pozioma
-    let rocketVy = -3; // Prędkość pionowa podczas startu
-
-    const PLANET_CENTER_Y = 300; // Połowa wysokości kontenera (600/2)
-    const LANDING_Y = 520;       // Pozycja Y, gdzie rakieta osiądzie na koniec gry
-
-    // Stany: 'launching' (start), 'patrolling' (lewo-prawo), 'landing' (wraca), 'landed' (koniec)
-    let rocketPhase = 'launching'; 
-
-    function updateRocket() {
-        if (rocketPhase === 'launching') {
-            // Rakieta leci do góry
-            rocketY += rocketVy;
-            // Emoji 🚀 domyślnie patrzy w prawo-górę (ok 45 stopni). 
-            // -45deg obróci ją idealnie pionowo w górę.
-            rocket.style.transform = `translate(-50%, -50%) rotate(-45deg)`;
-
-            // Sprawdzamy czy osiągnęła środek planety
-            if (rocketY <= PLANET_CENTER_Y) {
-                rocketY = PLANET_CENTER_Y;
-                rocketPhase = 'patrolling';
-            }
-        } 
-        else if (rocketPhase === 'patrolling') {
-            // Ruch tylko w poziomie
-            rocketX += rocketVx;
-
-            // Odbijanie od ścian
-            if (rocketX > 750) rocketVx = -4; // Zmiana kierunku w lewo
-            if (rocketX < 50) rocketVx = 4;   // Zmiana kierunku w prawo
-
-            // Obrót w kierunku lotu
-            if (rocketVx > 0) {
-                // Leci w prawo -> obrót 45deg (ustawia czubek w prawo)
-                rocket.style.transform = `translate(-50%, -50%) rotate(45deg)`;
-            } else {
-                // Leci w lewo -> obrót -135deg (ustawia czubek w lewo)
-                rocket.style.transform = `translate(-50%, -50%) rotate(-135deg)`;
-            }
-        }
-        else if (rocketPhase === 'landing') {
-            // Obliczamy dystans do środka i dołu
-            let dx = 400 - rocketX;
-            let dy = LANDING_Y - rocketY;
-            let distance = Math.sqrt(dx*dx + dy*dy);
-
-            if (distance > 5) {
-                // Leci w stronę lądowiska
-                rocketX += (dx / distance) * 3;
-                rocketY += (dy / distance) * 3;
-                
-                // Podczas lądowania (jak w SpaceX) rakieta ustawiona jest pionowo w górę
-                rocket.style.transform = `translate(-50%, -50%) rotate(-45deg)`;
-            } else {
-                rocketPhase = 'landed';
-                rocketX = 400;
-                rocketY = LANDING_Y;
-                // Pełne zatrzymanie na ziemi
-            }
+            return { x: xPos, y: baseY, scale: 1.5 }; // Bezpieczna, stała skala
         }
 
-        // Aktualizacja pozycji na ekranie
-        rocket.style.left = rocketX + 'px';
-        rocket.style.top = rocketY + 'px';
+        // 2. Zwraca płynną pozycję pomiędzy slajdami (interpolacja)
+        function getPathPos(progress) {
+            let p = Math.max(0, Math.min(MAX_SLIDES, progress));
+            let startIndex = Math.floor(p);
+            let endIndex = Math.ceil(p);
+            let t = p - startIndex;
 
-        requestAnimationFrame(updateRocket);
-    }
+            // Złagodzenie ruchu (smoothstep) - rakieta miękko zwalnia przy planetach
+            let easeT = t * t * (3 - 2 * t);
 
-    // Uruchomienie pętli animacji
-    requestAnimationFrame(updateRocket);
+            let start = getSlideTarget(startIndex);
+            let end = getSlideTarget(endIndex);
 
+            return {
+                x: start.x + (end.x - start.x) * easeT,
+                y: start.y + (end.y - start.y) * easeT,
+                scale: start.scale + (end.scale - start.scale) * easeT
+            };
+        }
+
+        // 3. Główna pętla animacji
+        function animationLoop() {
+            let scrollTop = scrollContainer.scrollTop;
+            let viewportHeight = window.innerHeight;
+            let targetProgress = scrollTop / viewportHeight;
+
+            // Rakieta miękko goni scrolla (prędkość 0.08)
+            currentProgress += (targetProgress - currentProgress) * 0.08;
+
+            let pos = getPathPos(currentProgress);
+            
+            // Obliczanie "przyszłej" pozycji, żeby wiedzieć, w którą stronę odwrócić dziób
+            let nextPos = getPathPos(currentProgress + 0.05);
+            let dx = (nextPos.x - pos.x) * (window.innerWidth / 100);
+            let dy = (nextPos.y - pos.y) * (window.innerHeight / 100);
+            let speed = Math.sqrt(dx * dx + dy * dy);
+
+            let targetAngle = -45; // Domyślnie rakieta ustawia się pionowo do góry na postojach
+            
+            // Jeśli rakieta wyraźnie się przemieszcza, obracamy ją w kierunku lotu
+            if (speed > 1) {
+                let mathAngle = Math.atan2(dy, dx) * 180 / Math.PI;
+                targetAngle = mathAngle + 45; // Dodajemy 45, bo to emoji 🚀 domyślnie "leży" pod kątem
+            }
+
+            // Zapobieganie wariowaniu przy obrocie (wybiera najkrótszą drogę przez kąty)
+            let angleDiff = targetAngle - currentVisualAngle;
+            angleDiff = ((angleDiff + 180) % 360 + 360) % 360 - 180;
+            currentVisualAngle += angleDiff * 0.1;
+
+            // Aplikowanie stylów
+            rocket.style.left = `${pos.x}%`;
+            rocket.style.top = `${pos.y}%`;
+            rocket.style.transform = `translate(-50%, -50%) rotate(${currentVisualAngle}deg) scale(${pos.scale})`;
+
+            requestAnimationFrame(animationLoop);
+        }
+
+        requestAnimationFrame(animationLoop);
+    });
 </script>
-</body>
-</html>
-```eof
