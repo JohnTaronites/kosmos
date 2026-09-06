@@ -1,0 +1,103 @@
+/* ============================================
+   KOSMICZNY ŚWIAT - Strona główna
+   ============================================ */
+
+/* Eksploracja główna */
+.explore-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem 0 4rem;
+}
+.explore-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.explore-title {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  margin-bottom: 1rem;
+  color: #ffe066;
+  text-shadow: 0 0 30px rgba(255, 224, 102, 0.5);
+}
+.explore-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: #e0e0e0; /* Jasnoszary dla lepszego kontrastu na ciemnym tle */
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+.explore-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.explore-card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--border-radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  transition: all 0.5s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: float 4s ease-in-out infinite;
+}
+.explore-card:nth-child(2) { animation-delay: 0.5s; }
+.explore-card:nth-child(3) { animation-delay: 1s; }
+.explore-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(155, 89, 182, 0.5);
+  animation-play-state: paused;
+}
+.explore-card-icon {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+.explore-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+}
+.explore-card-desc {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #e0e0e0; /* Jasnoszary dla lepszego kontrastu */
+  font-size: 0.85rem;
+  border-top: 1px solid var(--color-card-border);
+  margin-top: 3rem;
+}
+.footer-icons {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Animacje */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Responsywność */
+@media (max-width: 480px) {
+  .explore-title { font-size: 1.8rem; }
+  .explore-cards { gap: 1rem; }
+  .explore-card { padding: 2rem 1rem; }
+}
+@media (min-width: 481px) and (max-width: 768px) { .explore-cards { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 769px) { .explore-cards { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
+@media (min-width: 1024px) { .explore-cards { grid-template-columns: repeat(3, 1fr); } }

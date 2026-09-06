@@ -1,0 +1,210 @@
+/* ============================================
+   UKŁAD SŁONECZNY - style
+   ============================================ */
+
+/* Diagram Układu Słonecznego */
+.solar-system-page { padding: 6rem 0 2rem; }
+.solar-system-container { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
+
+.solar-system-diagram {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 1;
+  margin: 2rem auto;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(26, 26, 62, 0.8) 0%, transparent 70%);
+}
+
+/* Słońce */
+.sun {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff9c4 0%, #ffeb3b 40%, #ff9800 70%, #ff5722 100%);
+  animation: sun-pulse 3s ease-in-out infinite;
+  box-shadow: 0 0 40px #ffdd57, 0 0 80px #ff9500, 0 0 120px #ff6b00;
+  z-index: 10;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { box-shadow: 0 0 40px #ffdd57, 0 0 80px #ff9500, 0 0 120px #ff6b00; transform: translate(-50%, -50%) scale(1); }
+  50% { box-shadow: 0 0 60px #ffe066, 0 0 100px #ffa500, 0 0 150px #ff8c00; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* Ścieżki orbit */
+.orbit-path {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* Planety na orbitach */
+.planet-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  animation: orbit 20s linear infinite;
+}
+
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(var(--orbit-radius, 80px)) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(var(--orbit-radius, 80px)) rotate(-360deg); }
+}
+
+.planet-dot {
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s;
+  position: relative;
+  margin-top: calc(var(--size, 10px) * -0.5);
+}
+
+.planet-dot:hover {
+  transform: scale(1.4);
+}
+
+/* Etykieta jest tworzona w JS jako osobny div (z tłem dla czytelności),
+   więc pseudo-element ::after nie jest już potrzebny */
+
+/* Legenda planet */
+.planets-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  background: var(--color-card-bg);
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.legend-item:hover {
+  background: rgba(107, 63, 160, 0.4);
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+/* Info o planetach */
+.planets-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #ffe066;
+  text-shadow: 0 0 20px rgba(255, 224, 102, 0.4);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--color-text-secondary);
+  margin-bottom: 2.5rem;
+  font-size: 1rem;
+}
+
+/* Karty */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding: 1rem 0; }
+
+.card {
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 30px rgba(107, 63, 160, 0.5);
+}
+
+.card-visual {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1rem;
+  position: relative;
+}
+
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+.card-desc {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+}
+
+.card-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.75rem;
+  border-radius: 8px;
+}
+
+.card-info-label { color: var(--color-text-secondary); font-size: 0.7rem; text-transform: uppercase; }
+.card-info-value { color: var(--color-star-yellow); font-weight: 700; }
+
+.card-funfact {
+  margin-top: 0.75rem;
+  padding: 0.6rem;
+  background: rgba(155, 89, 182, 0.15);
+  border-left: 3px solid var(--color-accent);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.modal-visual { width: 100px; height: 100px; margin: 0 auto 1.5rem; position: relative; }
+
+.modal-funfact { background: linear-gradient(135deg, rgba(155, 89, 182, 0.3), rgba(63, 127, 176, 0.3)); padding: 1.25rem; border-radius: 16px; border-left: 4px solid var(--color-accent); }
+.modal-funfact-title { font-family: var(--font-heading); font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--color-star-yellow); }
+.modal-funfact-text { font-size: 0.95rem; line-height: 1.6; color: var(--color-text-primary); }
+
+@media (max-width: 480px) {
+  .solar-system-diagram { max-width: 90vw; }
+  .card-grid { grid-template-columns: 1fr; }
+}
+@media (min-width: 481px) and (max-width: 768px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 769px) { .card-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }
+@media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }

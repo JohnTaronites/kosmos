@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Układ Słoneczny - Kosmiczny Świat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/planets.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <canvas id="stars-canvas"></canvas>
+
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-brand">🌌 Kosmiczny Świat</div>
+      <ul class="navbar-links">
+        <li><a href="index.html">🏠 Strona Główna</a></li>
+        <li><a href="uklad-sloneczny.html" class="active">🪐 Układ Słoneczny</a></li>
+        <li><a href="ksiezyce.html">🌙 Księżyce</a></li>
+        <li><a href="dalekie-obiekty.html">🌌 Dalekie Obiekty</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="solar-system-page">
+    <div class="solar-system-container">
+      <h1 class="section-title">🪐 Układ Słoneczny</h1>
+      <p class="section-subtitle">Poznaj 9 obiektów - Słońce i 8 planet kręcących się wokół niego – od najmniejszej do największej!</p>
+
+      <div class="solar-system-diagram" id="solarDiagram">
+        <div class="sun"></div>
+      </div>
+
+      <div class="planets-legend">
+        <div class="legend-item" onclick="openPlanetModal('Sun')"><span class="legend-dot" style="background:#ffeb3b"></span> Sun</div>
+        <div class="legend-item" onclick="openPlanetModal('Mercury')"><span class="legend-dot" style="background:#a0522d"></span> Mercury</div>
+        <div class="legend-item" onclick="openPlanetModal('Venus')"><span class="legend-dot" style="background:#e8a64f"></span> Venus</div>
+        <div class="legend-item" onclick="openPlanetModal('Earth')"><span class="legend-dot" style="background:#3498db"></span> Earth</div>
+        <div class="legend-item" onclick="openPlanetModal('Mars')"><span class="legend-dot" style="background:#e05533"></span> Mars</div>
+        <div class="legend-item" onclick="openPlanetModal('Jupiter')"><span class="legend-dot" style="background:#d4a373"></span> Jupiter</div>
+        <div class="legend-item" onclick="openPlanetModal('Saturn')"><span class="legend-dot" style="background:#f4d03f"></span> Saturn</div>
+        <div class="legend-item" onclick="openPlanetModal('Uranus')"><span class="legend-dot" style="background:#85c1e9"></span> Uranus</div>
+        <div class="legend-item" onclick="openPlanetModal('Neptune')"><span class="legend-dot" style="background:#5dade2"></span> Neptune</div>
+      </div>
+
+      <h2 class="section-title mt-3">Wszystkie Planety</h2>
+      <p class="section-subtitle">Kliknij na planetę, aby dowiedzieć się więcej!</p>
+
+      <div class="planets-info-grid" id="planetsGrid"></div>
+    </div>
+  </main>
+
+  <!-- Modal dla planet -->
+  <div class="modal-overlay" id="planetModal">
+    <div class="modal">
+      <button class="modal-close">✕</button>
+      <div class="modal-visual"></div>
+      <h2 class="modal-title"></h2>
+      <p class="modal-desc"></p>
+      <div class="modal-stats">
+        <div class="modal-stat"><div class="modal-stat-value" data-stat="temp"></div><div class="modal-stat-label">Temperatura</div></div>
+        <div class="modal-stat"><div class="modal-stat-value" data-stat="orbit"></div><div class="modal-stat-label">Odległość od Słońca</div></div>
+      </div>
+      <div class="modal-funfact">
+        <div class="modal-funfact-title">🌟 Ciekawostka!</div>
+        <div class="modal-funfact-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-icons">✨ 🌟 🌌 ✨</div>
+    <p>Kosmiczny Świat – strona edukacyjna dla dzieci.</p>
+  </footer>
+
+  <script src="js/stars.js"></script>
+  <script src="js/planets.js"></script>
+</body>
+</html>

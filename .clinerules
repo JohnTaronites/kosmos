@@ -1,0 +1,1 @@
+Do not use PowerShell or terminal echo commands to crete or edit files. always write files directly using system file tools

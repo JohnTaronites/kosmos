@@ -1,0 +1,87 @@
+/* DALEKIE OBIEKTY */
+.deepsky-page { padding: 6rem 0 2rem; }
+.deepsky-container { max-width: 1000px; margin: 0 auto; padding: 0 1rem; }
+.section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); text-align: center; margin-bottom: 0.5rem; color: #ffe066; text-shadow: 0 0 20px rgba(255, 224, 102, 0.4); }
+.section-subtitle { text-align: center; color: var(--color-text-secondary); margin-bottom: 2.5rem; }
+
+/* Badges */
+.type-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; }
+.type-badge.galaxy { background: rgba(155, 89, 182, 0.3); color: #9b59b6; }
+.type-badge.nebula { background: rgba(230, 126, 34, 0.3); color: #e67e22; }
+.type-badge.blackhole { background: rgba(0,0,0,0.5); color: #8e44ad; border: 1px solid #8e44ad; }
+.type-badge.dwarf { background: rgba(44,62,80,0.5); color: #95a5a6; }
+
+/* Filter */
+.filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; }
+.filter-btn { padding: 0.5rem 1rem; border-radius: 9999px; background: rgba(255,255,255,0.05); color: var(--color-text-secondary); border: 1px solid var(--color-card-border); font-size: 0.85rem; transition: all 0.3s; cursor: pointer; }
+.filter-btn:hover, .filter-btn.active { background: rgba(155,89,182,0.3); color: var(--color-text-primary); border-color: var(--color-accent); }
+
+/* Cards */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding: 1rem 0; justify-items: center; }
+.card { background: var(--color-card-bg); border: 1px solid var(--color-card-border); border-radius: var(--border-radius-lg); padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.5); transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; text-align: center; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 30px rgba(155,89,182,0.5); }
+.card-visual { width: 100px; height: 100px; margin: 0 auto 1rem; position: relative; }
+.card-title { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.5rem; text-align: center; }
+.card-desc { color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.5; margin-bottom: 0.75rem; }
+.card-info { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; font-size: 0.8rem; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 8px; }
+.card-info-label { color: var(--color-text-secondary); font-size: 0.7rem; text-transform: uppercase; }
+.card-info-value { color: var(--color-star-yellow); font-weight: 700; }
+.card-funfact { margin-top: 0.75rem; padding: 0.6rem; background: rgba(155,89,182,0.15); border-left: 3px solid var(--color-accent); border-radius: 0 8px 8px 0; font-size: 0.85rem; font-style: italic; color: var(--color-text-secondary); }
+
+/* Galaxy SVG */
+.galaxy-svg { width: 100px; height: 100px; margin: 0 auto 2rem; animation: galaxy-spin 30s linear infinite; }
+@keyframes galaxy-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* Nebula */
+.nebula-visual { width: 100px; height: 100px; margin: 0 auto 2rem; position: relative; display: flex; align-items: center; justify-content: center; }
+.nebula-cloud { position: absolute; border-radius: 50%; filter: blur(15px); animation: nebula-wave 6s ease-in-out infinite; }
+.nebula-cloud:nth-child(1) { width: 80px; height: 80px; background: rgba(255,100,150,0.5); animation-delay: 0s; }
+.nebula-cloud:nth-child(2) { width: 70px; height: 70px; background: rgba(100,150,255,0.4); animation-delay: 1s; }
+.nebula-cloud:nth-child(3) { width: 60px; height: 60px; background: rgba(255,200,100,0.3); animation-delay: 2s; }
+@keyframes nebula-wave { 0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.6; } 50% { transform: scale(1.05) rotate(3deg); opacity: 0.8; } }
+
+/* Black hole */
+.blackhole-visual { width: 100px; height: 100px; margin: 0 auto 2rem; position: relative; }
+.blackhole-core { width: 40px; height: 40px; background: #000; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2; }
+.blackhole-ring { width: 90px; height: 90px; border: 3px solid; border-color: #ff6b00 #ffa500 #ffdd57 #ff8c00; border-radius: 50%; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%) rotateX(75deg); animation: accretion-disk 4s linear infinite; }
+@keyframes accretion-disk { from { transform: translate(-50%,-50%) rotate(0deg); } to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+/* Dwarf planet */
+.dwarf-visual { width: 80px; height: 80px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+
+/* Modal */
+.modal-visual { width: 100px; height: 100px; margin: 0 auto 1.5rem; }
+.modal-funfact { background: linear-gradient(135deg, rgba(155,89,182,0.3), rgba(63,127,176,0.3)); padding: 1.25rem; border-radius: 16px; border-left: 4px solid var(--color-accent); }
+.modal-funfact-title { font-family: var(--font-heading); font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--color-star-yellow); }
+.modal-funfact-text { font-size: 0.95rem; line-height: 1.6; }
+
+/* Constellation cards */
+.constellation-card { max-width: 500px; text-align: center; margin-left: auto; margin-right: auto; display: block;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--border-radius-lg);
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  margin-top: 2rem;
+}
+.constellation-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 30px rgba(155,89,182,0.5);
+}
+.constellation-visual {
+  width: 100%;
+  max-width: 450px;
+  height: 320px;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.2);
+  border-radius: 16px;
+  overflow: visible;
+}
+
+@media (max-width: 480px) { .card-grid { grid-template-columns: 1fr; } }
+@media (min-width: 769px) { .card-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); } }

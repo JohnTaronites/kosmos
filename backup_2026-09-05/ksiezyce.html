@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Księżyce - Kosmiczny Świat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/moons.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+  <canvas id="stars-canvas"></canvas>
+
+  <nav class="navbar">
+    <div class="container">
+      <div class="navbar-brand">🌌 Kosmiczny Świat</div>
+      <ul class="navbar-links">
+        <li><a href="index.html">🏠 Strona Główna</a></li>
+        <li><a href="uklad-sloneczny.html">🪐 Układ Słoneczny</a></li>
+        <li><a href="ksiezyce.html" class="active">🌙 Księżyce</a></li>
+        <li><a href="dalekie-obiekty.html">🌌 Dalekie Obiekty</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="moons-page">
+    <div class="moons-container">
+      <h1 class="section-title">🌙 Księżyce</h1>
+      <p class="section-subtitle">Odkryj fascynujące księżyce planet w naszym Układzie Słonecznym!</p>
+
+      <div class="moons-container">
+        <h2 class="section-title mt-3">Nasz Księżyc i inne satelity</h2>
+        <p class="section-subtitle">Każdy księżyc ma swoją unikalną historię i ciekawe właściwości!</p>
+        <div class="card-grid" id="moonsGrid"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal dla księżyców -->
+  <div class="modal-overlay" id="moonModal">
+    <div class="modal">
+      <button class="modal-close">✕</button>
+      <div class="modal-visual"></div>
+      <h2 class="modal-title"></h2>
+      <p class="modal-desc"></p>
+      <div class="modal-stats">
+        <div class="modal-stat"><div class="modal-stat-value" data-stat="temp"></div><div class="modal-stat-label">Temperatura</div></div>
+        <div class="modal-stat"><div class="modal-stat-value" data-stat="radius"></div><div class="modal-stat-label">Promień</div></div>
+        <div class="modal-stat"><div class="modal-stat-value" data-stat="distance"></div><div class="modal-stat-label">Odległość od planety</div></div>
+      </div>
+      <div class="modal-funfact">
+        <div class="modal-funfact-title">🌟 Ciekawostka!</div>
+        <div class="modal-funfact-text"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-icons">✨ 🌟 🌌 ✨</div>
+    <p>Kosmiczny Świat – strona edukacyjna dla dzieci.</p>
+  </footer>
+
+  <script src="js/stars.js"></script>
+  <script src="js/moons.js"></script>
+</body>
+</html>
