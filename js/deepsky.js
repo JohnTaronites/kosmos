@@ -7,10 +7,10 @@ const DEEPSKY_DATA = [
   { id: 'haumea', name: 'Haumea', type: 'dwarf', description: 'Planeta karlowata o dziwnym ksztalcie jajowatym.', temp: '-240C', distance: '6.5 mld km', funFact: 'Haumea kreci sie tak szybko, ze wyciagnela sie wzdluz rownika!', color: '#e0d4c0' },
   { id: 'andromeda', name: 'Andromeda Galaxy', type: 'galaxy', description: 'Najblizsza spiralna galaktyka – widoczna golym okiem.', temp: '-20C', distance: '2.5 mln lat swietlnych', funFact: 'Andromeda zbliza sie do nas – za 4.5 mld lat polacza sie z Mleczna Droga!', color: '#9b59b6' },
   { id: 'ton618', name: 'TON 618', type: 'blackhole', description: 'Jedna z najwiekszych znanych supermasywnych czarnych dziur – kwazar.', temp: 'miliony C', distance: '10.4 mld lat swietlnych', funFact: 'Masa TON 618 to ok. 66 miliard mas Slonca – jeden z najciezszych obiektow!', color: '#e74c3c' },
-  { id: 'orion_const', name: 'Orion (Wielki Wedrowiec)', type: 'constellation', description: 'Jedna z najbardziej rozpoznawalnych konstelacji – widoczna zima.', temp: '---', distance: 'Gwiazdy: 243-1360 lat sw.', funFact: 'Pas Oriona to jedno z najlatwiejszych do znalezienia ksztaltow na niebie!', stars: [{name:'Betelgeuse',x:35,y:30,size:10,color:'#ff6b6b'},{name:'Bellatrix',x:65,y:25,size:6,color:'#8ecae6'},{name:'Rigel',x:75,y:75,size:10,color:'#8ecae6'},{name:'Saiph',x:45,y:80,size:6,color:'#8ecae6'},{name:'Alnitak',x:42,y:52,size:7,color:'#8ecae6'},{name:'Alnilam',x:50,y:52,size:7,color:'#8ecae6'},{name:'Mintaka',x:58,y:52,size:7,color:'#8ecae6'}], lines:[[0,2],[0,1],[2,3],[3,0],[0,4],[1,4],[4,5],[5,6]] },
-  { id: 'ursa_major_const', name: 'Ursa Major (Wielka Niedzwiedzica)', type: 'constellation', description: 'Znana z "Wielkiego Wozu" – sluzy do znajdowania Biegunowki.', temp: '---', distance: 'Gwiazdy: 78-124 lat sw.', funFact: 'Dwie gwiazdy na koncu wozu wskazuja na Polaris – Gwiazde Polnocna!', stars: [{name:'Dubhe',x:25,y:55,size:8,color:'#fff4b8'},{name:'Merak',x:35,y:70,size:7,color:'#fff4b8'},{name:'Phecda',x:45,y:65,size:7,color:'#fff4b8'},{name:'Megrez',x:55,y:55,size:6,color:'#fff4b8'},{name:'Alioth',x:65,y:45,size:7,color:'#fff4b8'},{name:'Mizar',x:75,y:38,size:8,color:'#fff4b8'},{name:'Alkaid',x:85,y:30,size:7,color:'#fff4b8'}], lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6]] },
-  { id: 'cassiopeia_const', name: 'Cassiopeia (Kasjopeja)', type: 'constellation', description: 'Charakterystyczne "W" na polnocnym niebie – kraglorodzinie widoczna.', temp: '---', distance: 'Gwiazdy: 54-613 lat sw.', funFact: 'Kasjopeja to krolowa w mitologii – jej tron jest zamkniety w wiecznym kregu!', stars: [{name:'Schedar',x:20,y:45,size:8,color:'#ffd3b6'},{name:'Caph',x:40,y:30,size:7,color:'#ffd3b6'},{name:'Gamma Cas',x:55,y:45,size:7,color:'#ffd3b6'},{name:'Ruchbah',x:70,y:30,size:7,color:'#ffd3b6'},{name:'Segin',x:85,y:45,size:6,color:'#ffd3b6'}], lines:[[0,1],[1,2],[2,3],[3,4]] },
-  { id: 'scorpius_const', name: 'Scorpius (Skorpion)', type: 'constellation', description: 'Pieknna, wyrazna konstelacja letnia – przypomina skorpiona.', temp: '---', distance: 'Gwiazdy: 10-600 lat sw.', funFact: 'Antares – "Rival Marsa" – to czerwona olbrzymia gwiazda w sercu Skorpiona!', stars: [{name:'Antares',x:50,y:55,size:10,color:'#ff6b6b'},{name:'Graffias',x:35,y:35,size:7,color:'#8ecae6'},{name:'Dschubba',x:40,y:45,size:6,color:'#8ecae6'},{name:'Sargas',x:65,y:40,size:7,color:'#8ecae6'},{name:'Shaula',x:80,y:70,size:7,color:'#8ecae6'},{name:'Lesath',x:85,y:78,size:6,color:'#8ecae6'}], lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[0,2]] }
+  { id: 'orion_const', name: 'Orion (Wielki Wędrowiec)', type: 'constellation', description: 'Jedna z najbardziej rozpoznawalnych konstelacji zimowego nieba.', temp: '---', distance: 'Gwiazdy: ok. 250–2000 lat św.', funFact: 'Trzy gwiazdy w jednej linii tworzą Pas Oriona — jeden z najłatwiejszych do rozpoznania układów gwiazd.', stars: [{name:'Betelgeuse', x:18, y:20, size:10, color:'#ff6b6b', labelDx:-2, labelDy:-12},{name:'Bellatrix', x:82, y:22, size:7, color:'#8ecae6', labelDx:2, labelDy:-12},{name:'Alnitak', x:38, y:47, size:7, color:'#8ecae6', labelDx:-10, labelDy:-12},{name:'Alnilam', x:50, y:49, size:7, color:'#8ecae6', labelDx:0, labelDy:16},{name:'Mintaka', x:62, y:51, size:7, color:'#8ecae6', labelDx:10, labelDy:16},{name:'Saiph', x:25, y:82, size:7, color:'#8ecae6', labelDx:-3, labelDy:18},{name:'Rigel', x:76, y:80, size:10, color:'#8ecae6', labelDx:4, labelDy:18}], lines:[[0,1],[1,6],[6,5],[5,0],[0,2],[2,3],[3,4],[4,1],[2,5],[4,6]] },
+  { id: 'ursa_major_const', name: 'Ursa Major (Wielka Niedźwiedzica)', type: 'constellation', description: 'Wielka Niedźwiedzica jest jedną z najbardziej charakterystycznych konstelacji północnego nieba.', temp: '---', distance: 'Gwiazdy: ok. 78–124 lat św.', funFact: 'Siedem jasnych gwiazd tworzy Wielki Wóz. Linia Merak–Dubhe pomaga odnaleźć Gwiazdę Polarną.', stars: [{name:'Dubhe', x:22, y:28, size:8, color:'#fff4b8', labelDx:-2, labelDy:-13},{name:'Merak', x:22, y:62, size:7, color:'#fff4b8', labelDx:-2, labelDy:18},{name:'Phecda', x:48, y:62, size:7, color:'#fff4b8', labelDx:0, labelDy:18},{name:'Megrez', x:48, y:28, size:6, color:'#fff4b8', labelDx:0, labelDy:-13},{name:'Alioth', x:70, y:30, size:8, color:'#fff4b8', labelDx:0, labelDy:-13},{name:'Mizar', x:87, y:45, size:8, color:'#fff4b8', labelDx:0, labelDy:-13},{name:'Alkaid', x:104, y:65, size:8, color:'#fff4b8', labelDx:0, labelDy:18}], lines:[[0,1],[1,2],[2,3],[3,0],[3,4],[4,5],[5,6]] },
+  { id: 'cassiopeia_const', name: 'Cassiopeia (Kasjopeja)', type: 'constellation', description: 'Charakterystyczne W widoczne na północnym niebie.', temp: '---', distance: 'Gwiazdy: ok. 54–613 lat św.', funFact: 'Kasjopeja jest jednym z najłatwiejszych do rozpoznania układów gwiazd północnego nieba.', stars: [{name:'Schedar', x:15, y:55, size:8, color:'#ffd3b6', labelDx:-2, labelDy:18},{name:'Caph', x:35, y:25, size:7, color:'#ffd3b6', labelDx:0, labelDy:-13},{name:'Gamma Cas', x:55, y:55, size:8, color:'#ffd3b6', labelDx:0, labelDy:18},{name:'Ruchbah', x:75, y:25, size:7, color:'#ffd3b6', labelDx:0, labelDy:-13},{name:'Segin', x:98, y:55, size:6, color:'#ffd3b6', labelDx:-2, labelDy:18}], lines:[[0,1],[1,2],[2,3],[3,4]] },
+  { id: 'scorpius_const', name: 'Scorpius (Skorpion)', type: 'constellation', description: 'Wyrazista konstelacja letniego nieba przypominająca skorpiona z zakrzywionym ogonem.', temp: '---', distance: 'Gwiazdy: ok. 80–600 lat św.', funFact: 'Antares jest czerwoną nadolbrzymią gwiazdą i swoim kolorem przypomina Marsa.', stars: [{name:'Graffias', x:18, y:25, size:7, color:'#8ecae6', labelDx:-5, labelDy:-13},{name:'Dschubba', x:28, y:40, size:7, color:'#8ecae6', labelDx:0, labelDy:-13},{name:'Antares', x:45, y:54, size:11, color:'#ff6b6b', labelDx:0, labelDy:18},{name:'Sargas', x:66, y:48, size:8, color:'#fff4b8', labelDx:0, labelDy:-13},{name:'Shaula', x:88, y:66, size:8, color:'#8ecae6', labelDx:-2, labelDy:18},{name:'Lesath', x:96, y:78, size:7, color:'#8ecae6', labelDx:2, labelDy:18}], lines:[[0,1],[1,2],[2,3],[3,4],[4,5]] }
 ];
 window.deepskyData = DEEPSKY_DATA;
 
@@ -34,51 +34,80 @@ function getVisualHTML(obj) {
 }
 
 function createConstellationSVG(obj) {
+  const width = 480;
+  const height = 320;
+
   const stars = obj.stars;
   const lines = obj.lines;
-  const width = 320, height = 240;
-  const margin = 20; // margines wewnętrzny
-  // Znajdź min i max współrzędnych
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-  stars.forEach(s => {
-    if (s.x < minX) minX = s.x;
-    if (s.x > maxX) maxX = s.x;
-    if (s.y < minY) minY = s.y;
-    if (s.y > maxY) maxY = s.y;
-  });
-  // Jeśli brak zakresu, użyj domyślnego
-  if (minX === Infinity) { minX = 0; maxX = 100; }
-  if (minY === Infinity) { minY = 0; maxY = 100; }
-  const rangeX = maxX - minX || 100;
-  const rangeY = maxY - minY || 100;
-  // Skala z zachowaniem proporcji i marginesem
-  const scale = Math.min(
-    (width - 2 * margin) / rangeX,
-    (height - 2 * margin) / rangeY
-  );
-  const offsetX = (width - rangeX * scale) / 2;
-  const offsetY = (height - rangeY * scale) / 2;
-  // Funkcja transformująca
-  const tx = (x) => offsetX + (x - minX) * scale;
-  const ty = (y) => offsetY + (y - minY) * scale;
 
-  let svg = '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" style="filter:drop-shadow(0 0 20px rgba(255,255,255,0.3));">';
-  // Linie między gwiazdami
-  for (let i = 0; i < lines.length; i++) {
-    const s1 = stars[lines[i][0]], s2 = stars[lines[i][1]];
-    if (s1 && s2) {
-      svg += '<line x1="' + tx(s1.x) + '" y1="' + ty(s1.y) + '" x2="' + tx(s2.x) + '" y2="' + ty(s2.y) + '" stroke="rgba(255,255,255,0.6)" stroke-width="1.5" stroke-linecap="round"/>';
-    }
-  }
+  let svg = `
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 120 80"
+      preserveAspectRatio="xMidYMid meet"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-label="${obj.name}"
+    >
+  `;
+
+  // Linie
+  lines.forEach(([a, b]) => {
+    const s1 = stars[a];
+    const s2 = stars[b];
+
+    if (!s1 || !s2) return;
+
+    svg += `
+      <line
+        x1="${s1.x}"
+        y1="${s1.y}"
+        x2="${s2.x}"
+        y2="${s2.y}"
+        stroke="rgba(220,230,255,0.58)"
+        stroke-width="0.55"
+        stroke-linecap="round"
+      />
+    `;
+  });
+
   // Gwiazdy
-  for (let i = 0; i < stars.length; i++) {
-    const s = stars[i];
-    const x = tx(s.x), y = ty(s.y);
-    const r = s.size * 0.8; // mniejsze gwiazdy
-    svg += '<circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="' + s.color + '" filter="url(#starGlow)"/>';
-    svg += '<text x="' + x + '" y="' + (y - r - 8) + '" fill="rgba(255,255,255,0.9)" font-size="9" text-anchor="middle" font-family="Comfortaa,cursive">' + s.name + '</text>';
-  }
-  svg += '<defs><filter id="starGlow"><feGaussianBlur stdDeviation="1.5" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs></svg>';
+  stars.forEach((s) => {
+    const labelDx = s.labelDx || 0;
+    const labelDy = s.labelDy || -8;
+
+    svg += `
+      <circle
+        cx="${s.x}"
+        cy="${s.y}"
+        r="${Math.max(1.2, s.size * 0.18)}"
+        fill="${s.color}"
+        class="constellation-star"
+      />
+
+      <circle
+        cx="${s.x}"
+        cy="${s.y}"
+        r="${Math.max(2, s.size * 0.35)}"
+        fill="${s.color}"
+        opacity="0.15"
+      />
+
+      <text
+        x="${s.x + labelDx}"
+        y="${s.y + labelDy}"
+        fill="rgba(255,255,255,0.92)"
+        font-size="2.8"
+        text-anchor="middle"
+        font-family="Comfortaa, sans-serif"
+      >${s.name}</text>
+    `;
+  });
+
+  svg += `
+      </svg>
+  `;
+
   return svg;
 }
 
@@ -101,8 +130,8 @@ function createDeepSkyCards() {
     DEEPSKY_DATA.filter(function(obj) { return obj.type === 'constellation'; }).forEach(function(obj) {
       var card = document.createElement('div');
       card.className = 'card constellation-card';
-      card.style.cssText = 'min-height:450px;display:flex;flex-direction:column;align-items:center;';
-      card.innerHTML = '<div class="card-visual constellation-visual" style="width:100%;max-width:450px;height:320px;margin-bottom:1rem;">' + createConstellationSVG(obj) + '</div><h3 class="card-title">' + obj.name + '</h3><p class="card-desc">' + obj.description + '</p><div class="card-info"><div class="card-info-item"><span class="card-info-label">Stars</span><span class="card-info-value">' + obj.stars.length + '</span></div><div class="card-info-item"><span class="card-info-label">Distance</span><span class="card-info-value">' + obj.distance + '</span></div></div><div class="card-funfact">' + obj.funFact + '</div>';
+
+      card.innerHTML = '<div class="card-visual constellation-visual">' + createConstellationSVG(obj) + '</div><h3 class="card-title">' + obj.name + '</h3><p class="card-desc">' + obj.description + '</p><div class="card-info"><div class="card-info-item"><span class="card-info-label">Stars</span><span class="card-info-value">' + obj.stars.length + '</span></div><div class="card-info-item"><span class="card-info-label">Distance</span><span class="card-info-value">' + obj.distance + '</span></div></div><div class="card-funfact">' + obj.funFact + '</div>';
       card.addEventListener('click', function() { openDeepSkyModal(obj.id); });
       constContainer.appendChild(card);
     });
